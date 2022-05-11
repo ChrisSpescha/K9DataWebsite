@@ -49,8 +49,9 @@ def similar_size_dogs(input_dog, response):
             similar_dogs_list.append(new_dog)
     three_breeds = []
     print(len(similar_dogs_list))
-    if len(similar_dogs_list) != 1:
+    if len(similar_dogs_list) > 1:
         for i in range(3):
+            print(len(similar_dogs_list))
             n = random.randint(0, len(similar_dogs_list) - 1)
             print(n)
             random_dog = similar_dogs_list[n]
@@ -79,6 +80,7 @@ def dog_info(name):
     for dog in response.json():
         if name.lower() == dog['name'].lower():
             similar_dogs = similar_size_dogs(dog['weight']['imperial'], response.json())
+            length = len(similar_dogs)
             if 'bred_for' not in dog:
                 bred_for = 'Not Bred by Humans'
             else:
@@ -96,8 +98,7 @@ def dog_info(name):
                 life_span=dog['life_span'],
                 img_url=dog['image']['url']
             )
-    return render_template('index.html', form=form, dog=dog_displayed, similar_dogs=similar_dogs)
-
+    return render_template('index.html', form=form, dog=dog_displayed, similar_dogs=similar_dogs, length=length)
 
 
 if __name__ == "__main__":
